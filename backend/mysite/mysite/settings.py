@@ -31,6 +31,7 @@ ALLOWED_HOSTS = [
     'localhost', 
     '127.0.0.1', 
     '192.168.68.102',
+    '.onrender.com',
     '6e3d-2001-ee0-d708-eb50-fffc-a6c6-6bac-a01a.ngrok-free.app']
 
 # Application definition
