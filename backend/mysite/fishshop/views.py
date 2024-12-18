@@ -7,10 +7,10 @@ from .models import *
 from .serializers import *
 from fishshop import serializers
 # For bills & reports
-from reportlab.pdfgen import canvas
-from reportlab.lib import fonts
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase import pdfmetrics
+# from reportlab.pdfgen import canvas
+# from reportlab.lib import fonts
+# from reportlab.pdfbase.ttfonts import TTFont
+# from reportlab.pdfbase import pdfmetrics
 # For authentication
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -672,140 +672,140 @@ def check_out(request):
      # Trả phản hồi     
      return Response({'success': True, 'message': 'Đã tạo hóa đơn!', 'ma_hoa_don': new_hoa_don.ma_hoa_don})
 
-@api_view(['GET'])
-def export_hoadon_pdf(request, ma_hoa_don):
+# @api_view(['GET'])
+# def export_hoadon_pdf(request, ma_hoa_don):
     
-     # Lấy đối tượng HOADON từ cơ sở dữ liệu
-     hoadon = get_object_or_404(HOADON, ma_hoa_don=ma_hoa_don)
-     ma_nguoi_dung_str = str(hoadon.ma_nguoi_dung)
-     ma_nguoi_dung_lst = list(ma_nguoi_dung_str.split(' - '))
-     user_id = int(ma_nguoi_dung_lst[0])
+#      # Lấy đối tượng HOADON từ cơ sở dữ liệu
+#      hoadon = get_object_or_404(HOADON, ma_hoa_don=ma_hoa_don)
+#      ma_nguoi_dung_str = str(hoadon.ma_nguoi_dung)
+#      ma_nguoi_dung_lst = list(ma_nguoi_dung_str.split(' - '))
+#      user_id = int(ma_nguoi_dung_lst[0])
 
-     nguoidung = NGUOIDUNG.objects.get(ma_nguoi_dung=user_id)     
+#      nguoidung = NGUOIDUNG.objects.get(ma_nguoi_dung=user_id)     
      
-     # Lấy các đối tượng cá trong cthd thuộc về hóa đơn (tên + số lượng)
-     fish_dict = {}
-     cthd_id = CTHD_CA.objects.filter(ma_hoa_don=ma_hoa_don).values('ma_ca', 'soluong')
-     index_ca = 0
-     for i in cthd_id:
-          info_list = []          
-          # Lấy tên cá
-          fish_name = CA_BETTA.objects.filter(ma_ca=i['ma_ca']).values('ten_ca')
-          info_list.append(fish_name[0]['ten_ca'])
-          # Lấy số lượng mua
-          info_list.append(i['soluong'])
-          # Đánh số thứ tự
-          info_list.append(index_ca)
-          index_ca += 1
+#      # Lấy các đối tượng cá trong cthd thuộc về hóa đơn (tên + số lượng)
+#      fish_dict = {}
+#      cthd_id = CTHD_CA.objects.filter(ma_hoa_don=ma_hoa_don).values('ma_ca', 'soluong')
+#      index_ca = 0
+#      for i in cthd_id:
+#           info_list = []          
+#           # Lấy tên cá
+#           fish_name = CA_BETTA.objects.filter(ma_ca=i['ma_ca']).values('ten_ca')
+#           info_list.append(fish_name[0]['ten_ca'])
+#           # Lấy số lượng mua
+#           info_list.append(i['soluong'])
+#           # Đánh số thứ tự
+#           info_list.append(index_ca)
+#           index_ca += 1
 
-          fish_dict[i['ma_ca']] = info_list
+#           fish_dict[i['ma_ca']] = info_list
 
-     # Lấy các đối tượng thức ăn trong cthd thuộc về hóa đơn (tên + số lượng)
-     food_dict = {}
-     cthd_food = CTHD_THUCAN.objects.filter(ma_hoa_don=ma_hoa_don).values('ma_thucan', 'soluong')
-     index_thucan = 0
-     for i in cthd_food:
-          info_list = []
-          # Lấy tên thức ăn
-          food_name = THUCAN.objects.filter(ma_thucan=i['ma_thucan']).values('ten_thucan')
-          info_list.append(food_name[0]['ten_thucan'])
-          # Lấy số lượng mua
-          info_list.append(i['soluong'])
-          # Đánh số thứ tự
-          info_list.append(index_thucan)
-          index_thucan += 1
+#      # Lấy các đối tượng thức ăn trong cthd thuộc về hóa đơn (tên + số lượng)
+#      food_dict = {}
+#      cthd_food = CTHD_THUCAN.objects.filter(ma_hoa_don=ma_hoa_don).values('ma_thucan', 'soluong')
+#      index_thucan = 0
+#      for i in cthd_food:
+#           info_list = []
+#           # Lấy tên thức ăn
+#           food_name = THUCAN.objects.filter(ma_thucan=i['ma_thucan']).values('ten_thucan')
+#           info_list.append(food_name[0]['ten_thucan'])
+#           # Lấy số lượng mua
+#           info_list.append(i['soluong'])
+#           # Đánh số thứ tự
+#           info_list.append(index_thucan)
+#           index_thucan += 1
 
-          food_dict[i['ma_thucan']] = info_list
+#           food_dict[i['ma_thucan']] = info_list
      
-     # In hóa đơn
-     # Tạo đối tượng HttpResponse với kiểu nội dung là application/pdf
-     response = HttpResponse(content_type='application/pdf')
+#      # In hóa đơn
+#      # Tạo đối tượng HttpResponse với kiểu nội dung là application/pdf
+#      response = HttpResponse(content_type='application/pdf')
 
-     # Thiết lập header để tạo tên file khi tải về
-     response['Content-Disposition'] = f'attachment; filename="hoadon_{ma_hoa_don}.pdf"'
+#      # Thiết lập header để tạo tên file khi tải về
+#      response['Content-Disposition'] = f'attachment; filename="hoadon_{ma_hoa_don}.pdf"'
 
-     # Đường dẫn đến font trên hệ thống
-     font_path = 'D:/UIT/HK I 2023-2024/SE347.O11/UIT/web_app/new_version/backend/fonts/times.ttf'
-     # Đăng ký font
-     pdfmetrics.registerFont(TTFont('times', font_path))
+#      # Đường dẫn đến font trên hệ thống
+#      font_path = 'D:/UIT/HK I 2023-2024/SE347.O11/UIT/web_app/new_version/backend/fonts/times.ttf'
+#      # Đăng ký font
+#      pdfmetrics.registerFont(TTFont('times', font_path))
 
-     # Tạo đối tượng PDF sử dụng ReportLab
-     p = canvas.Canvas(response)
-     p.setFont("times", 12)
+#      # Tạo đối tượng PDF sử dụng ReportLab
+#      p = canvas.Canvas(response)
+#      p.setFont("times", 12)
      
-     # Vẽ nội dung PDF từ dữ liệu
-     p.drawString(100, 800, f'THÔNG TIN NGƯỜI DÙNG')
-     p.drawString(100, 780, f'Họ tên: {nguoidung.ho_ten}')
-     p.drawString(100, 760, f'Địa chỉ: {nguoidung.dia_chi}')
-     p.drawString(100, 740, f'Số điện thoại: {nguoidung.sdt}')
+#      # Vẽ nội dung PDF từ dữ liệu
+#      p.drawString(100, 800, f'THÔNG TIN NGƯỜI DÙNG')
+#      p.drawString(100, 780, f'Họ tên: {nguoidung.ho_ten}')
+#      p.drawString(100, 760, f'Địa chỉ: {nguoidung.dia_chi}')
+#      p.drawString(100, 740, f'Số điện thoại: {nguoidung.sdt}')
 
-     p.drawString(100, 680, f'THÔNG TIN HÓA ĐƠN')
-     p.drawString(100, 660, f'Mã hóa đơn: {hoadon.ma_hoa_don}')
-     p.drawString(100, 640, f'Ngày: {hoadon.ngay}')
-     p.drawString(100, 620, f'Tình trạng: {hoadon.get_tinh_trang_display()}')
-     p.drawString(100, 600, f'Tổng số lượng mua: {hoadon.tong_sl_mua}')
-     p.drawString(100, 580, f'Tổng tiền: {hoadon.tong_tien}')
-     p.showPage()     
-     # Đặt lại cài đặt font cho trang mới
-     p.setFont("times", 12)
+#      p.drawString(100, 680, f'THÔNG TIN HÓA ĐƠN')
+#      p.drawString(100, 660, f'Mã hóa đơn: {hoadon.ma_hoa_don}')
+#      p.drawString(100, 640, f'Ngày: {hoadon.ngay}')
+#      p.drawString(100, 620, f'Tình trạng: {hoadon.get_tinh_trang_display()}')
+#      p.drawString(100, 600, f'Tổng số lượng mua: {hoadon.tong_sl_mua}')
+#      p.drawString(100, 580, f'Tổng tiền: {hoadon.tong_tien}')
+#      p.showPage()     
+#      # Đặt lại cài đặt font cho trang mới
+#      p.setFont("times", 12)
 
-     # Thêm thông tin từng cá mua vào pdf - thêm vào trang sau
-     count_ca = 0
-     count_stt_ca = 0
-     while count_ca < index_ca:
-          p.drawString(100, 800, f'CHI TIẾT CÁ')
-          p.drawString(100, 750, f'TÊN CÁ')
-          p.drawString(450, 750, f'SỐ LƯỢNG')
-          default_line = 700
-          for ten_ca, so_luong, stt in fish_dict.values():
-               if stt == count_stt_ca:
-                    p.drawString(100, default_line, f'{ten_ca}')
-                    p.drawString(500, default_line, f'{so_luong}')
-                    default_line -= 20
-                    count_ca += 1
-                    count_stt_ca += 1
-                    if count_ca == index_ca:
-                         break
-                    if default_line <= 100:
-                         p.showPage()
-                         # Đặt lại cài đặt font cho trang mới
-                         p.setFont("times", 12)
-                         break
+#      # Thêm thông tin từng cá mua vào pdf - thêm vào trang sau
+#      count_ca = 0
+#      count_stt_ca = 0
+#      while count_ca < index_ca:
+#           p.drawString(100, 800, f'CHI TIẾT CÁ')
+#           p.drawString(100, 750, f'TÊN CÁ')
+#           p.drawString(450, 750, f'SỐ LƯỢNG')
+#           default_line = 700
+#           for ten_ca, so_luong, stt in fish_dict.values():
+#                if stt == count_stt_ca:
+#                     p.drawString(100, default_line, f'{ten_ca}')
+#                     p.drawString(500, default_line, f'{so_luong}')
+#                     default_line -= 20
+#                     count_ca += 1
+#                     count_stt_ca += 1
+#                     if count_ca == index_ca:
+#                          break
+#                     if default_line <= 100:
+#                          p.showPage()
+#                          # Đặt lại cài đặt font cho trang mới
+#                          p.setFont("times", 12)
+#                          break
      
-     # In hết thông tin cá = chuyển qua in thông tin thức ăn
-     if index_ca != 0:
-          p.showPage()
-          # Đặt lại cài đặt font cho trang mới
-          p.setFont("times", 12)
+#      # In hết thông tin cá = chuyển qua in thông tin thức ăn
+#      if index_ca != 0:
+#           p.showPage()
+#           # Đặt lại cài đặt font cho trang mới
+#           p.setFont("times", 12)
      
-     # Thêm thông tin thức ăn vào pdf
-     count_thucan = 0
-     count_stt_thucan = 0
-     while count_thucan < index_thucan:
-          p.drawString(100, 800, f'CHI TIẾT THỨC ĂN')
-          p.drawString(100, 750, f'TÊN THỨC ĂN')
-          p.drawString(450, 750, f'SỐ LƯỢNG')
-          default_line = 700
-          for ten_thucan, so_luong, stt in food_dict.values():
-               if stt == count_stt_thucan:
-                    p.drawString(100, default_line, f'{ten_thucan}')
-                    p.drawString(500, default_line, f'{so_luong}')
-                    default_line -= 20
-                    count_thucan += 1
-                    count_stt_thucan += 1
-                    if count_thucan == index_thucan:
-                         break
-                    if default_line <= 100:
-                         p.showPage()
-                         # Đặt lại cài đặt font cho trang mới
-                         p.setFont("times", 12)
-                         break
+#      # Thêm thông tin thức ăn vào pdf
+#      count_thucan = 0
+#      count_stt_thucan = 0
+#      while count_thucan < index_thucan:
+#           p.drawString(100, 800, f'CHI TIẾT THỨC ĂN')
+#           p.drawString(100, 750, f'TÊN THỨC ĂN')
+#           p.drawString(450, 750, f'SỐ LƯỢNG')
+#           default_line = 700
+#           for ten_thucan, so_luong, stt in food_dict.values():
+#                if stt == count_stt_thucan:
+#                     p.drawString(100, default_line, f'{ten_thucan}')
+#                     p.drawString(500, default_line, f'{so_luong}')
+#                     default_line -= 20
+#                     count_thucan += 1
+#                     count_stt_thucan += 1
+#                     if count_thucan == index_thucan:
+#                          break
+#                     if default_line <= 100:
+#                          p.showPage()
+#                          # Đặt lại cài đặt font cho trang mới
+#                          p.setFont("times", 12)
+#                          break
 
-     # In hết thông tin thức ăn thì hết trang và lưu pdf
-     p.showPage()
-     p.save()
+#      # In hết thông tin thức ăn thì hết trang và lưu pdf
+#      p.showPage()
+#      p.save()
 
-     return response
+#      return response
 
 @api_view(['POST'])
 def getReports(request):
