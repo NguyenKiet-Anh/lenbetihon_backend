@@ -27,11 +27,10 @@ SECRET_KEY = 'django-insecure-a2kr9p_nr1-$()e5npmskz!6c1gw+eg(hohle)_lrdj+x#f5ki
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.10.118', 
     'localhost', 
     '127.0.0.1', 
-    '192.168.68.102',
-    '.onrender.com',
+    '0.0.0.0',
+    'lenbetihon-backend.onrender.com',
     '6e3d-2001-ee0-d708-eb50-fffc-a6c6-6bac-a01a.ngrok-free.app']
 
 # Application definition
