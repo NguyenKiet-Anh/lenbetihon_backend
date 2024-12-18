@@ -1,0 +1,42 @@
+loaica
+	+ Galaxy
+	+ Nemo
+	+ Halfmoon
+
+betta galaxy
+	+ betta 1 - Giant khổng lồ koi nemo galaxy tiger chuẩn chủng - 500,000đ - Đực
+	+ betta 2 - Giant không lồ koi nemo galaxy achilles - 500,000đ - 400,000đ - Đực
+	+ betta 3 - Koi nemo galaxy star beautiful đang lên màu hotboy - 140,000đ - Đực
+	+ betta 4 - Giant khổng lồ koi nemo galaxy metallic luster - 500,000đ - Đực
+	+ betta 5 - Mái koi nemo candy galaxy star giống tốt - 140,000đ - Mái
+	
+betta nemo
+	+ betta 6 - Giant khổng lồ koi nemo nền vàng legend Perses - 500,000đ - 400,000đ - Đực
+	+ betta 7 - Koi nemo candy copper màu tươi twister - 380,000đ - 280,000đ - Đực
+	+ betta 8 - Giant khổng lồ koi nemo nền đỏ màu chiến binh Hespera - 500,000đ - 400,000đ - Đực
+	+ betta 9 - Giant khổng lồ koi nemo candy màu tươi twister - 500,000đ - Đực
+	+ betta 10 - Mái koi nemo thiên thần Babi - 110,000đ - Mái
+	+ betta 11 - Mái koi nemo candy star màu đẹp giống tốt - 110,000đ - Mái
+	+ betta 21 - Koi nemo candy nền vàng cam Manetho’s Aegyptiaca - 140,000đ - Đực
+	+ betta 22 - Koi nemo candy viền kẹo ngọt ngào Heh - 240,000đ - Đực
+	+ betta 23 - Koi nemo tiger nền vàng nghệ Titan - 140,000đ - Đực
+	+ betta 24 - Mái koi nemo multicolor ánh kim giống tốt - 110,000 - Mái
+	+ betta 25 - Koi nemo nền đỏ máu tươi twister Zelos - 140,000 - Đực
+
+betta halfmoon
+	+ betta 12 - Halfmoon dumbo lavender viền trắng màu & form đẹp - 80,000đ - Đực
+	+ betta 13 - Halfmoon combtail super blue fapink siêu hiếm Hades - 80,000đ - Đực
+	+ betta 14 - Halfmoon blue red siêu chiến binh hoàng gia - 80,000đ - Đực
+	+ betta 15 - Halfmoon super red chiên binh dãi ngân hà - 80,000đ - Đực
+	+ betta 16 - Halfmoon green fawhite butterfly màu hiếm - 80,000đ - Đực
+	+ betta 17 - Mái halfmoon koi nemo nền vàng cam giống tốt - 110,000đ - Mái
+	+ betta 18 - Mái halfmoon koi nemo ánh kim màu sáng đẹp - 110,000đ - Mái
+	+ betta 19 - Mái halfmoon koi nemo candy blue fin màu tươi đẹp - 110,000đ - Mái
+	+ betta 20 - Halfmoon yellow dragon butterfly Hercules- 80,000đ - Đực
+
+thucan
+	+ thucan1 - Cám INVE 5/8 - 100gr
+	+ thucan2 - Cám INVE 3/5 - 50gr
+	+ thucan4 - Lăng quăng sấy khô - 5gr
+	+ thucan3 - Cám BT-01 - 5gr
+	+ thucan5 - 20gr
