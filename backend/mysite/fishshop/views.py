@@ -711,45 +711,45 @@ def check_out(request):
      return Response({'success': True, 'message': 'Đã tạo hóa đơn!', 'ma_hoa_don': new_hoa_don.ma_hoa_don})
 
 # @api_view(['GET'])
-# def export_hoadon_pdf(request, ma_hoa_don):
+def export_hoadon_pdf(request, ma_hoa_don):
     
-#      # Lấy đối tượng HOADON từ cơ sở dữ liệu
-#      hoadon = get_object_or_404(HOADON, ma_hoa_don=ma_hoa_don)
-#      ma_nguoi_dung_str = str(hoadon.ma_nguoi_dung)
-#      ma_nguoi_dung_lst = list(ma_nguoi_dung_str.split(' - '))
-#      user_id = int(ma_nguoi_dung_lst[0])
+     # Lấy đối tượng HOADON từ cơ sở dữ liệu
+     hoadon = get_object_or_404(HOADON, ma_hoa_don=ma_hoa_don)
+     ma_nguoi_dung_str = str(hoadon.ma_nguoi_dung)
+     ma_nguoi_dung_lst = list(ma_nguoi_dung_str.split(' - '))
+     user_id = int(ma_nguoi_dung_lst[0])
 
-#      nguoidung = NGUOIDUNG.objects.get(ma_nguoi_dung=user_id)     
+     nguoidung = NGUOIDUNG.objects.get(ma_nguoi_dung=user_id)     
      
-#      # Lấy các đối tượng cá trong cthd thuộc về hóa đơn (tên + số lượng)
-#      fish_dict = {}
-#      cthd_id = CTHD_CA.objects.filter(ma_hoa_don=ma_hoa_don).values('ma_ca', 'soluong')
-#      index_ca = 0
-#      for i in cthd_id:
-#           info_list = []          
-#           # Lấy tên cá
-#           fish_name = CA_BETTA.objects.filter(ma_ca=i['ma_ca']).values('ten_ca')
-#           info_list.append(fish_name[0]['ten_ca'])
-#           # Lấy số lượng mua
-#           info_list.append(i['soluong'])
-#           # Đánh số thứ tự
-#           info_list.append(index_ca)
-#           index_ca += 1
+     # Lấy các đối tượng cá trong cthd thuộc về hóa đơn (tên + số lượng)
+     fish_dict = {}
+     cthd_id = CTHD_CA.objects.filter(ma_hoa_don=ma_hoa_don).values('ma_ca', 'soluong')
+     index_ca = 0
+     for i in cthd_id:
+          info_list = []          
+          # Lấy tên cá
+          fish_name = CA_BETTA.objects.filter(ma_ca=i['ma_ca']).values('ten_ca')
+          info_list.append(fish_name[0]['ten_ca'])
+          # Lấy số lượng mua
+          info_list.append(i['soluong'])
+          # Đánh số thứ tự
+          info_list.append(index_ca)
+          index_ca += 1
 
-#           fish_dict[i['ma_ca']] = info_list
+          fish_dict[i['ma_ca']] = info_list
 
-#      # Lấy các đối tượng thức ăn trong cthd thuộc về hóa đơn (tên + số lượng)
-#      food_dict = {}
-#      cthd_food = CTHD_THUCAN.objects.filter(ma_hoa_don=ma_hoa_don).values('ma_thucan', 'soluong')
-#      index_thucan = 0
-#      for i in cthd_food:
-#           info_list = []
-#           # Lấy tên thức ăn
-#           food_name = THUCAN.objects.filter(ma_thucan=i['ma_thucan']).values('ten_thucan')
-#           info_list.append(food_name[0]['ten_thucan'])
-#           # Lấy số lượng mua
-#           info_list.append(i['soluong'])
-#           # Đánh số thứ tự
+     # Lấy các đối tượng thức ăn trong cthd thuộc về hóa đơn (tên + số lượng)
+     food_dict = {}
+     cthd_food = CTHD_THUCAN.objects.filter(ma_hoa_don=ma_hoa_don).values('ma_thucan', 'soluong')
+     index_thucan = 0
+     for i in cthd_food:
+          info_list = []
+          # Lấy tên thức ăn
+          food_name = THUCAN.objects.filter(ma_thucan=i['ma_thucan']).values('ten_thucan')
+          info_list.append(food_name[0]['ten_thucan'])
+          # Lấy số lượng mua
+          info_list.append(i['soluong'])
+          # Đánh số thứ tự
 #           info_list.append(index_thucan)
 #           index_thucan += 1
 
