@@ -527,7 +527,7 @@ def create_payment_link(request):
           orderInfo = "pay with MoMo"
           partnerCode = "MOMO"
           redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b"
-          ipnUrl = "https://6e3d-2001-ee0-d708-eb50-fffc-a6c6-6bac-a01a.ngrok-free.app/getNotification/"
+          ipnUrl = "https://lenbetihon-backend.onrender.com/getNotification/"
           amount = str(total_price)
           orderId = str(uuid.uuid4())
           requestId = str(uuid.uuid4())
@@ -625,10 +625,6 @@ class GetNotificationView(APIView):
 
           # Trả về Response đồng bộ sau khi hoàn thành các tác vụ bất đồng bộ
           return Response({"details": request.data})
-
-
-
-
 
 
 # api for check out
