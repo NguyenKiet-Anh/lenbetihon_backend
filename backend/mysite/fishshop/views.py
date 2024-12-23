@@ -596,6 +596,7 @@ import asyncio
 # # For receive MOMO response
 class GetNotificationView(APIView):
      async def post(self, request):
+          print(request.data)
           order_id = request.data.get("orderId")
           status = request.data.get("status")
           message = request.data.get("message")     
