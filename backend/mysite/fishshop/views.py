@@ -451,7 +451,7 @@ def signUp(request):
 
           ok = send_mail(
                'Verify Your Email',
-               f'Click the following link to verify your email: http://localhost:3000/signup?token={verification_token}',
+               f'Click the following link to verify your email: https://lenbetihon-backend.onrender.com/signup?token={verification_token}',
                'anhkiet.nguyen798@gmail.com',
                [request.data['email']],
                fail_silently=False,
