@@ -601,7 +601,7 @@ def verify_email(request):
             # Cập nhật trạng thái tài khoản thành đã kích hoạt
             activate_account.is_actived = True
             activate_account.save()
-            return Response({'success': True, 'message': 'Tài khoản kích hoạt thành công!'})
+            return Response({'success': True, 'message': 'Tài khoản kích hoạt thành công! Từ giờ bạn có thể đăng nhập bằng tài khoản này!'})
         else:
             return Response({'success': False, 'message': 'Tài khoản đã bị xoá trước khi được kích hoạt!'})
     except TAIKHOAN.DoesNotExist:
