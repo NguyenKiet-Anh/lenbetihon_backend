@@ -409,9 +409,101 @@ def logIn(request):
           return Response({'success': False, 'message': 'Đăng nhập thất bại!'})
 
 # api for signing up     
+# @api_view(['POST'])
+# def signUp(request):
+#      if request.data.get('is_first_request', False):
+#           username = request.data.get('username')
+#           password = request.data.get('password')
+#           fullname = request.data.get('fullname')
+#           email = request.data.get('email')
+#           phone_number = request.data.get('phone_number')
+#           address = request.data.get('address')
+
+#           # Kiểm tra email có tồn tại
+#           # is_exists = validate_email(email_address=email,  smtp_from_address='my@from.addr.ess', smtp_helo_host='my.host.name')
+#           # if is_exists == True: print('Email is found !!!')
+#           # else: 
+#           #      print('Email is not found !!!')
+#           #      return Response({'success': False, 'message': 'Email is not found !!!'})
+          
+#           try:
+#                account = TAIKHOAN.objects.filter(ten_tai_khoan=username)
+#                if account:
+#                     return Response({'success': False, 'message': 'USERNAME đã tồn tại!'})
+               
+#                email_used = NGUOIDUNG.objects.filter(email=email)
+#                if email_used:
+#                     return Response({'success': False, 'message': 'Email đã được sử dụng trên tài khoản khác'})
+               
+#                phone_used = NGUOIDUNG.objects.filter(sdt=phone_number)
+#                if phone_used:
+#                     return Response({'success': False, 'message': 'Số điện thoại đã được sử dụng trên tài khoản khác'})
+
+#           except TAIKHOAN.DoesNotExist:
+#                pass
+          
+#           verification_token=secrets.token_urlsafe(32)
+#           token = {'token': verification_token}
+
+#           cache_key = f'signup_data_{verification_token}'
+#           cache.set(cache_key, token, timeout=300)
+
+#           ok = send_mail(
+#                'Verify Your Email',
+#                f'Click the following link to verify your email: https://lenbetihon-backend.onrender.com/signup?token={verification_token}',
+#                'anhkiet.nguyen798@gmail.com',
+#                [request.data['email']],
+#                fail_silently=False,
+#                )
+          
+#           if ok:
+#                new_account = TAIKHOAN.objects.create(
+#                     is_admin = False,
+#                     is_customer = True,
+#                     is_actived = False,
+#                     ten_tai_khoan = username,
+#                     tai_khoan = username,
+#                     mat_khau = password,
+#                     verification_token=verification_token,
+#                )
+#                new_account.save()
+
+#                new_user = NGUOIDUNG.objects.create(
+#                     ho_ten = fullname,
+#                     dia_chi = address,
+#                     sdt = phone_number,
+#                     email = email,
+#                     tai_khoan = new_account,
+#                )
+#                new_user.save()
+               
+#                return Response({'success': True, 'message': 'Đăng ký thành công!'})
+#           else: 
+#                return Response({'success': False, 'message': 'Đăng ký thất bại. Email không tồn tại!'})
+     
+#      elif request.data.get('activate', False):
+#           print("Hello")
+#           cache_key = f'signup_data_{request.data["token"]}'
+#           cached_data = cache.get(cache_key)
+
+#           if not cached_data:
+#                return Response({'success': False, 'message': 'Cached data not found or expired.'})
+
+#           try:
+#                verification_token = cached_data.get('token')
+
+#                activate_account = TAIKHOAN.objects.get(verification_token = verification_token)
+#                if activate_account:
+#                     activate_account.is_actived = True
+#                     activate_account.save()
+#                     return Response({'success': True, 'message': 'Tài khoản kích hoạt thành công!'})
+#                else:
+#                     return Response({'success': False, 'message': 'Tài khoản đã bị xoá trước khi được kích hoạt!'})
+#           except:
+#                return Response({'success': False, 'message': 'Lỗi hệ thống!!!'})
+
 @api_view(['POST'])
 def signUp(request):
-
      if request.data.get('is_first_request', False):
           username = request.data.get('username')
           password = request.data.get('password')
@@ -420,13 +512,6 @@ def signUp(request):
           phone_number = request.data.get('phone_number')
           address = request.data.get('address')
 
-          # Kiểm tra email có tồn tại
-          # is_exists = validate_email(email_address=email,  smtp_from_address='my@from.addr.ess', smtp_helo_host='my.host.name')
-          # if is_exists == True: print('Email is found !!!')
-          # else: 
-          #      print('Email is not found !!!')
-          #      return Response({'success': False, 'message': 'Email is not found !!!'})
-          
           try:
                account = TAIKHOAN.objects.filter(ten_tai_khoan=username)
                if account:
@@ -443,68 +528,86 @@ def signUp(request):
           except TAIKHOAN.DoesNotExist:
                pass
           
-          verification_token=secrets.token_urlsafe(32)
+          # Tạo mã token xác thực
+          verification_token = secrets.token_urlsafe(32)
           token = {'token': verification_token}
 
+          # Lưu token vào cache với timeout là 300 giây
           cache_key = f'signup_data_{verification_token}'
           cache.set(cache_key, token, timeout=300)
 
+          # Gửi email với đường link xác nhận
+          verification_link = f'https://lenbetihon-backend.onrender.com/signup/verify/?token={verification_token}'
           ok = send_mail(
                'Verify Your Email',
-               f'Click the following link to verify your email: https://lenbetihon-backend.onrender.com/signup?token={verification_token}',
+               f'Click the following link to verify your email: {verification_link}',
                'anhkiet.nguyen798@gmail.com',
                [request.data['email']],
                fail_silently=False,
-               )
+          )
           
           if ok:
+               # Tạo tài khoản mới
                new_account = TAIKHOAN.objects.create(
-                    is_admin = False,
-                    is_customer = True,
-                    is_actived = False,
-                    ten_tai_khoan = username,
-                    tai_khoan = username,
-                    mat_khau = password,
+                    is_admin=False,
+                    is_customer=True,
+                    is_actived=False,
+                    ten_tai_khoan=username,
+                    tai_khoan=username,
+                    mat_khau=password,
                     verification_token=verification_token,
                )
                new_account.save()
 
+               # Tạo thông tin người dùng
                new_user = NGUOIDUNG.objects.create(
-                    ho_ten = fullname,
-                    dia_chi = address,
-                    sdt = phone_number,
-                    email = email,
-                    tai_khoan = new_account,
+                    ho_ten=fullname,
+                    dia_chi=address,
+                    sdt=phone_number,
+                    email=email,
+                    tai_khoan=new_account,
                )
                new_user.save()
-               
-               return Response({'success': True, 'message': 'Đăng ký thành công!'})
+
+               return Response({'success': True, 'message': 'Đăng ký thành công! Hãy kiểm tra email để kích hoạt tài khoản.'})
           else: 
                return Response({'success': False, 'message': 'Đăng ký thất bại. Email không tồn tại!'})
-     
-     elif request.data.get('activate', False):
-          print("Hello")
-          cache_key = f'signup_data_{request.data["token"]}'
-          cached_data = cache.get(cache_key)
-
-          if not cached_data:
-               return Response({'success': False, 'message': 'Cached data not found or expired.'})
-
-          try:
-               verification_token = cached_data.get('token')
-
-               activate_account = TAIKHOAN.objects.get(verification_token = verification_token)
-               if activate_account:
-                    activate_account.is_actived = True
-                    activate_account.save()
-                    return Response({'success': True, 'message': 'Tài khoản kích hoạt thành công!'})
-               else:
-                    return Response({'success': False, 'message': 'Tài khoản đã bị xoá trước khi được kích hoạt!'})
-          except:
-               return Response({'success': False, 'message': 'Lỗi hệ thống!!!'})
 
 
+@api_view(['GET'])
+def verify_email(request):
+    # Lấy token từ query params
+    token = request.GET.get('token')
 
+    # Kiểm tra nếu không có token
+    if not token:
+        return Response({'success': False, 'message': 'Token missing!'}, status=400)
+
+    # Lấy dữ liệu từ cache sử dụng token
+    cache_key = f'signup_data_{token}'
+    cached_data = cache.get(cache_key)
+
+    if not cached_data:
+        return Response({'success': False, 'message': 'Cached data not found or expired.'}, status=400)
+
+    try:
+        # Lấy token từ cached data
+        verification_token = cached_data.get('token')
+
+        # Kiểm tra tài khoản với token này
+        activate_account = TAIKHOAN.objects.get(verification_token=verification_token)
+
+        if activate_account:
+            # Cập nhật trạng thái tài khoản thành đã kích hoạt
+            activate_account.is_actived = True
+            activate_account.save()
+            return Response({'success': True, 'message': 'Tài khoản kích hoạt thành công!'})
+        else:
+            return Response({'success': False, 'message': 'Tài khoản đã bị xoá trước khi được kích hoạt!'})
+    except TAIKHOAN.DoesNotExist:
+        return Response({'success': False, 'message': 'Tài khoản không tồn tại!'}, status=404)
+    except Exception as e:
+        return Response({'success': False, 'message': f'Lỗi hệ thống: {str(e)}'}, status=500)
 
 
 # API for create payment link
